@@ -80,7 +80,7 @@
         links.forEach(function(link) {
           if (link.source.index === node.index && result.indexOf(link.target.index) < 0) {
             result.push(link.target.index);
-            find(link.target);
+            searchDownstream(link.target);
           }
         });
       }
@@ -88,7 +88,7 @@
         links.forEach(function(link) {
           if (link.target.index == node.index && result.indexOf(link.source.index) < 0) {
             result.push(link.source.index);
-            find(link.source);
+            searchUpstream(link.source);
           }
         });
       }
