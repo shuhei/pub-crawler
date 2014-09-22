@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": "./index.js",
   "scripts": {
     "postinstall": "mkdir -p public/lib && cp node_modules/d3/d3.js public/lib/",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,6 +11,7 @@
   "author": "Shuhei Kagawa <shuhei.kagawa@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "d3": "^3.4.11",
     "es6-promise": "^1.0.0",
     "express": "^4.9.4",
     "open": "0.0.5"

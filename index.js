@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 var express = require('express');
 var open = require('open');
 var util = require('util');
