@@ -26,19 +26,28 @@ line.link {
 
 circle {
   stroke-width: 2px;
+  cursor: pointer;
 }
 
-circle.normal {
+.normal circle {
   fill: #ccc;
   stroke: #fff;
 }
 
-circle.top-level {
+.top-level circle {
   fill: #c33;
   stroke: #fff;
 }
 
-circle.independent {
+.independent circle {
   fill: #3cc;
   stroke: #fff;
+}
+
+.inactive circle {
+  opacity: 0.2;
+}
+
+line.inactive {
+  opacity: 0.2;
 }

@@ -31,13 +31,15 @@
   });
 
   function draw(nodes, links) {
+    var selectedNodes = null;
+
     // Nodes
     var force = d3.layout.force()
       .size([w, h])
       .nodes(nodes)
       .links(links)
       .gravity(1)
-      .linkDistance(50)
+      .linkDistance(70)
       .charge(-2000)
       .linkStrength(10);
     force.start();
@@ -45,8 +47,31 @@
     var link = vis.selectAll('line.link')
       .data(links)
     .enter()
-      .append('svg:line')
-      .attr('class', 'link');
+      .append('svg:line');
+    link.call(updateLinkClass);
+
+    function nodeClass(d) {
+      if (!d.isDepended) { return 'top-level'; }
+      if (!d.isDepending) { return 'independent'; }
+      return 'normal';
+    }
+
+    function findRelated(startNode) {
+      // TODO: Use non-recursive way.
+      function find(result, node) {
+        links.forEach(function(link) {
+          // Search downstream.
+          if (link.source.index === node.index && result.indexOf(link.target.index) < 0) {
+            result.push(link.target.index);
+            find(result, link.target);
+          }
+          // TODO: Search upstream too.
+        });
+      }
+      var result = [startNode.index];
+      find(result, startNode);
+      return result;
+    }
 
     var node = vis.selectAll('g.node')
       .data(nodes)
@@ -54,13 +79,28 @@
       .append('svg:g')
       .attr('class', 'node');
     node.append('svg:circle')
-      .attr('r', 5)
-      .attr('class', function(d) {
-        if (!d.isDepended) { return 'top-level'; }
-        if (!d.isDepending) { return 'independent'; }
-        return 'normal';
-      });
+      .attr('r', 5);
+    node.on('mousedown', function(d) {
+      selectedNodes = findRelated(d);
+      node.call(updateNodeClass);
+      link.call(updateLinkClass);
+    });
+    node.on('mouseup', function(d) {
+      selectedNodes = null;
+      node.call(updateNodeClass);
+      link.call(updateLinkClass);
+    });
+    node.on('mouseout', function(d) {
+      selectedNodes = null;
+      node.call(updateNodeClass);
+      link.call(updateLinkClass);
+    });
     node.call(force.drag);
+    node.call(updateNodeClass);
+
+    function updateSelected(index) {
+      selectedNodes = [index];
+    }
 
     // Anchors
     var anchors = nodes.reduce(function(acc, node) {
@@ -104,13 +144,13 @@
     var anchorLink = vis.selectAll('line.anchor-link')
       .data(anchorLinks);
 
-    function updateNode() {
+    function updateNodePosition() {
       this.attr('transform', function(d) {
         return translate(d.x, d.y);
       });
     }
 
-    function updateLink() {
+    function updateLinkPosition() {
       this.attr('x1', function(d) { return d.source.x; })
         .attr('y1', function(d) { return d.source.y; })
         .attr('x2', function(d) { return d.target.x; })
@@ -139,16 +179,34 @@
       });
     }
 
+    function updateNodeClass() {
+      this.attr('class', function(d) {
+        var isActive = !selectedNodes || selectedNodes.indexOf(d.index) >= 0;
+        var result = isActive ? 'active ' : 'inactive ';
+        return result + nodeClass(d);
+      });
+    }
+
+    function updateLinkClass() {
+      this.attr('class', function(d) {
+        var isActive = !selectedNodes || (
+          selectedNodes.indexOf(d.source.index) >= 0 &&
+          selectedNodes.indexOf(d.target.index) >= 0
+        );
+        return 'link ' + (isActive ? 'active' : 'inactive');
+      });
+    }
+
     force.on('tick', function() {
       anchorForce.start();
 
-      node.call(updateNode);
-      anchorNode.call(updateNode);
+      node.call(updateNodePosition);
+      anchorNode.call(updateNodePosition);
 
       layoutAnchorNodes();
 
-      link.call(updateLink);
-      anchorLink.call(updateLink);
+      link.call(updateLinkPosition);
+      anchorLink.call(updateLinkPosition);
     });
   }
 })();
