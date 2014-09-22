@@ -1,0 +1,16 @@
+{
+  "name": "pub-crawler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "mkdir -p public/lib && cp node_modules/d3/d3.js public/lib/",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Shuhei Kagawa <shuhei.kagawa@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "es6-promise": "^1.0.0",
+    "express": "^4.9.4"
+  }
+}
