@@ -6,6 +6,20 @@
     .attr('width', w)
     .attr('height', h);
 
+  // Build the arrow.
+  vis.append('svg:defs').selectAll('marker')
+    .data(['end'])
+  .enter().append('marker')
+    .attr('id', String)
+    .attr('viewBox', '0 -5 10 10')
+    .attr('refX', 20)
+    .attr('refY', 0)
+    .attr('markerWidth', 6)
+    .attr('markerHeight', 6)
+    .attr('orient', 'auto')
+  .append('svg:path')
+    .attr('d', 'M0,-5L10,0L0,5');
+
   d3.json('/graph', function(graph) {
     var nodes = graph.nodes.map(function(name, i) {
       var isDepended = graph.links.filter(function(link) {
@@ -44,10 +58,12 @@
       .linkStrength(10);
     force.start();
 
+    // Links
     var link = vis.selectAll('line.link')
       .data(links)
     .enter()
-      .append('svg:line');
+      .append('svg:line')
+      .attr('marker-end', 'url(#end)');
     link.call(updateLinkClass);
 
     function nodeClass(d) {

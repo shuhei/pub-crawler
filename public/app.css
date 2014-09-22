@@ -20,8 +20,12 @@ text {
   fill: #eee;
 }
 
-line.link {
+.link {
   stroke: #999;
+}
+
+#end path {
+  fill: #999;
 }
 
 circle {
