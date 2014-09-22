@@ -1,13 +1,44 @@
 body {
   font-family: sans-serif;
   font-size: 16px;
+  margin: 0;
+  padding: 0;
+  background-color: #333;
 }
 
 h1 {
   text-align: center;
+  color: #ccc;
 }
 
 svg {
   margin: 0 auto;
   display: block;
+}
+
+text {
+  fill: #eee;
+}
+
+line.link {
+  stroke: #999;
+}
+
+circle {
+  stroke-width: 2px;
+}
+
+circle.normal {
+  fill: #ccc;
+  stroke: #fff;
+}
+
+circle.top-level {
+  fill: #c33;
+  stroke: #fff;
+}
+
+circle.independent {
+  fill: #3cc;
+  stroke: #fff;
 }
