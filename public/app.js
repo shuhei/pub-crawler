@@ -57,19 +57,29 @@
     }
 
     function findRelated(startNode) {
+      var result = [startNode.index];
+
       // TODO: Use non-recursive way.
-      function find(result, node) {
+      function searchDownstream(node) {
         links.forEach(function(link) {
-          // Search downstream.
           if (link.source.index === node.index && result.indexOf(link.target.index) < 0) {
             result.push(link.target.index);
-            find(result, link.target);
+            find(link.target);
           }
-          // TODO: Search upstream too.
         });
       }
-      var result = [startNode.index];
-      find(result, startNode);
+      function searchUpstream(node) {
+        links.forEach(function(link) {
+          if (link.target.index == node.index && result.indexOf(link.source.index) < 0) {
+            result.push(link.source.index);
+            find(link.source);
+          }
+        });
+      }
+
+      searchDownstream(startNode);
+      searchUpstream(startNode);
+
       return result;
     }
 

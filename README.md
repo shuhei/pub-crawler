@@ -15,3 +15,5 @@ npm install -g pub-crawler
 ```
 pub-crawler
 ```
+
+This command will launch a server and open your browser.
