@@ -1,4 +1,6 @@
 var express = require('express');
+var open = require('open');
+var util = require('util');
 var formulae = require('./formulae.js');
 
 var app = express();
@@ -13,5 +15,7 @@ app.get('/graph', function(req, res) {
 });
 
 var server = app.listen(5959, function() {
-  console.log('Listening on port %d', server.address().port);
+  var port = server.address().port;
+  console.log('Listening on port %d', port);
+  open(util.format('http://localhost:%d', port));
 });

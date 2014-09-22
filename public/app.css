@@ -51,3 +51,7 @@ circle {
 line.inactive {
   opacity: 0.2;
 }
+
+text.inactive {
+  opacity: 0.2;
+}

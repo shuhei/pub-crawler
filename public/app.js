@@ -84,16 +84,19 @@
       selectedNodes = findRelated(d);
       node.call(updateNodeClass);
       link.call(updateLinkClass);
+      anchorText.call(updateTextClass);
     });
     node.on('mouseup', function(d) {
       selectedNodes = null;
       node.call(updateNodeClass);
       link.call(updateLinkClass);
+      anchorText.call(updateTextClass);
     });
     node.on('mouseout', function(d) {
       selectedNodes = null;
       node.call(updateNodeClass);
       link.call(updateLinkClass);
+      anchorText.call(updateTextClass);
     });
     node.call(force.drag);
     node.call(updateNodeClass);
@@ -135,11 +138,12 @@
     anchorNode.append('svg:circle')
       .attr('r', 0)
       .style('fill', '#fff');
-    anchorNode.append('svg:text')
+    var anchorText = anchorNode.append('svg:text')
       .text(function(d, i) {
         return i % 2 === 0 ? '' : d.node.label;
       })
       .style('font-size', 10);
+    anchorText.call(updateTextClass);
 
     var anchorLink = vis.selectAll('line.anchor-link')
       .data(anchorLinks);
@@ -194,6 +198,14 @@
           selectedNodes.indexOf(d.target.index) >= 0
         );
         return 'link ' + (isActive ? 'active' : 'inactive');
+      });
+    }
+
+    function updateTextClass() {
+      this.attr('class', function(d) {
+        var isActive = !selectedNodes || selectedNodes.indexOf(d.node.index) >= 0;
+        var result = isActive ? 'active ' : 'inactive ';
+        return result + nodeClass(d.node);
       });
     }
 
