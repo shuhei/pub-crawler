@@ -2,6 +2,8 @@
 
 Visualize homebrew formulae in your machine.
 
+[![NPM](https://nodei.co/npm/pub-crawler.png)](https://nodei.co/npm/pub-crawler/)
+
 ![Pub Crawler Screenshot](screenshot.png)
 
 ## Installation
