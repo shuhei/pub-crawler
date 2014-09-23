@@ -38,10 +38,12 @@ h1 {
 
 text {
   fill: #eee;
+  transition: opacity 0.3s ease 0;
 }
 
 .link {
   stroke: #999;
+  transition: opacity 0.3s ease 0;
 }
 
 #end path {
@@ -51,6 +53,7 @@ text {
 circle {
   stroke-width: 2px;
   cursor: pointer;
+  transition: opacity 0.3s ease 0;
 }
 
 .normal circle,
