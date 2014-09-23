@@ -54,7 +54,7 @@
       .links(links)
       .gravity(1)
       .linkDistance(70)
-      .charge(-2000)
+      .charge(-1700)
       .linkStrength(10);
     force.start();
 
