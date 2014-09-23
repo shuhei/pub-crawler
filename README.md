@@ -6,6 +6,8 @@ Visualize homebrew formulae in your machine.
 
 ![Pub Crawler Screenshot](screenshot.png)
 
+![Pub Crawler Screenshot - Filtered](screenshot-filter.png)
+
 ## Installation
 
 ```
