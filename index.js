@@ -16,7 +16,7 @@ app.get('/graph', function(req, res) {
   });
 });
 
-var server = app.listen(5959, function() {
+var server = app.listen(0, function() {
   var port = server.address().port;
   console.log('Listening on port %d', port);
   open(util.format('http://localhost:%d', port));
