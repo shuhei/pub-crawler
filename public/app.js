@@ -68,6 +68,7 @@
 
   function draw(nodes, links) {
     var selectedNodes = null;
+    var selectedNode = null;
 
     // Nodes
     var force = d3.layout.force()
@@ -130,10 +131,7 @@
       .attr('r', 5);
     node.on('mousedown', function(d) {
       d3.event.stopPropagation();
-      selectedNodes = findRelated(d);
-      node.call(updateNodeClass);
-      link.call(updateLinkClass);
-      anchorText.call(updateTextClass);
+      selectNode(d);
     });
     d3.select(document.body).on('mousedown', clearSelected);
     d3.select(window).on('keydown', function() {
@@ -146,15 +144,22 @@
     node.call(force.drag);
     node.call(updateNodeClass);
 
-    function clearSelected() {
-      selectedNodes = null;
+    function selectNode(d) {
+      selectedNode = d.index;
+      selectedNodes = findRelated(d);
+
       node.call(updateNodeClass);
       link.call(updateLinkClass);
       anchorText.call(updateTextClass);
     }
 
-    function updateSelected(index) {
-      selectedNodes = [index];
+    function clearSelected() {
+      selectedNode = null;
+      selectedNodes = null;
+
+      node.call(updateNodeClass);
+      link.call(updateLinkClass);
+      anchorText.call(updateTextClass);
     }
 
     // Anchors
@@ -233,9 +238,15 @@
 
     function updateNodeClass() {
       this.attr('class', function(d) {
-        var isActive = !selectedNodes || selectedNodes.indexOf(d.index) >= 0;
-        var result = isActive ? 'active ' : 'inactive ';
-        return result + nodeClass(d);
+        var result = [nodeClass(d)];
+        if (selectedNode === d.index) {
+          result.push('node-selected');
+        } else if (!selectedNodes || selectedNodes.indexOf(d.index) >= 0) {
+          result.push('node-active');
+        } else {
+          result.push('node-inactive');
+        }
+        return result.join(' ');
       });
     }
 

@@ -53,7 +53,7 @@ text {
 circle {
   stroke-width: 2px;
   cursor: pointer;
-  transition: opacity 0.3s ease 0;
+  transition: opacity 0.3s ease 0, transform 0.3s ease 0.3s;
 }
 
 .normal circle,
@@ -74,7 +74,11 @@ circle {
   stroke: #fff;
 }
 
-.inactive circle {
+.node-selected circle {
+  transform: scale(1.5);
+}
+
+.node-inactive circle {
   opacity: 0.2;
 }
 
