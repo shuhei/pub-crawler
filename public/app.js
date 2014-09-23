@@ -112,13 +112,7 @@
       link.call(updateLinkClass);
       anchorText.call(updateTextClass);
     });
-    node.on('mouseup', function(d) {
-      selectedNodes = null;
-      node.call(updateNodeClass);
-      link.call(updateLinkClass);
-      anchorText.call(updateTextClass);
-    });
-    node.on('mouseout', function(d) {
+    d3.select(window).on('mouseup.drag-force', function(d) {
       selectedNodes = null;
       node.call(updateNodeClass);
       link.call(updateLinkClass);
