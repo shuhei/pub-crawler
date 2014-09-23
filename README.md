@@ -1,6 +1,6 @@
 # Pub Crawler
 
-Visualize homebrew formulae in your machine.
+Visualize homebrew formulae on your machine.
 
 [![NPM](https://nodei.co/npm/pub-crawler.png)](https://nodei.co/npm/pub-crawler/)
 
