@@ -129,19 +129,29 @@
     node.append('svg:circle')
       .attr('r', 5);
     node.on('mousedown', function(d) {
+      d3.event.stopPropagation();
       selectedNodes = findRelated(d);
       node.call(updateNodeClass);
       link.call(updateLinkClass);
       anchorText.call(updateTextClass);
     });
-    d3.select(window).on('mouseup.drag-force', function(d) {
+    d3.select(document.body).on('mousedown', clearSelected);
+    d3.select(window).on('keydown', function() {
+      // ESC
+      console.log(d3.event);
+      if (d3.event.keyCode === 27) {
+        clearSelected();
+      }
+    });
+    node.call(force.drag);
+    node.call(updateNodeClass);
+
+    function clearSelected() {
       selectedNodes = null;
       node.call(updateNodeClass);
       link.call(updateLinkClass);
       anchorText.call(updateTextClass);
-    });
-    node.call(force.drag);
-    node.call(updateNodeClass);
+    }
 
     function updateSelected(index) {
       selectedNodes = [index];
