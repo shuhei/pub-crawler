@@ -11,7 +11,27 @@ h1 {
   color: #ccc;
 }
 
-svg {
+.legend {
+  text-align: center;
+}
+
+.legend li {
+  display: inline;
+  color: #eee;
+  font-size: 12px;
+  padding: 0 10px;
+}
+
+.legend li span {
+  vertical-align: middle;
+}
+
+.legend svg {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+#vis {
   margin: 0 auto;
   display: block;
 }
@@ -33,17 +53,20 @@ circle {
   cursor: pointer;
 }
 
-.normal circle {
+.normal circle,
+.legend-normal circle {
   fill: #ccc;
   stroke: #fff;
 }
 
-.top-level circle {
+.top-level circle,
+.legend-top-level circle {
   fill: #c33;
   stroke: #fff;
 }
 
-.independent circle {
+.independent circle,
+.legend-independent circle {
   fill: #3cc;
   stroke: #fff;
 }

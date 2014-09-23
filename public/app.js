@@ -20,6 +20,28 @@
   .append('svg:path')
     .attr('d', 'M0,-5L10,0L0,5');
 
+  var legend = d3.select('body').insert('ul', 'svg').attr('class', 'legend').selectAll('li')
+    .data([
+      { name: 'top-level', class: 'top-level' },
+      { name: 'intermediate', class: 'normal' },
+      { name: 'independent', class: 'independent' }
+    ])
+  .enter().append('li')
+    .attr('class', function(d) { return 'legend-' + d.class });
+  legend.append('svg')
+    .attr('width', 14)
+    .attr('height', 14)
+  .append('svg:circle')
+    .attr('cx', 7)
+    .attr('cy', 7)
+    .attr('r', 5);
+  legend.append('span')
+    .text(function(d) { return d.name; });
+
+  function translate(x, y) {
+    return 'translate(' + x + ',' + y + ')';
+  }
+
   d3.json('/graph', function(graph) {
     var nodes = graph.nodes.map(function(name, i) {
       var isDepended = graph.links.filter(function(link) {
@@ -179,10 +201,6 @@
         .attr('y1', function(d) { return d.source.y; })
         .attr('x2', function(d) { return d.target.x; })
         .attr('y2', function(d) { return d.target.y; });
-    }
-
-    function translate(x, y) {
-      return 'translate(' + x + ',' + y + ')';
     }
 
     function layoutAnchorNodes() {
